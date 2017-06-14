@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/layout.xhtml">
+	<ui:define name="conteudo">
+	    <h:form id="form1">
+	    <p:panel header="BUSCAR PRODUTOS">
+	    	<h:outputText value="Informe o nome: " />
+	    	<p:inputText value="#{pBean.produto.nome}" />
+	    	<br/><br/>
+	    	<p:commandButton actionListener="#{pBean.buscar}" 
+	    	value="BUSCAR" update="form1"/>
+	    </p:panel>
+	    <p:separator />
+	    
+	    <p:dataTable emptyMessage="Nenhum produto na lista"
+	    value="#{pBean.lista}" var="prod">
+	    	<p:column headerText="NOME">
+	    		<h:outputText value="#{prod.nome}" />
+	    	</p:column>
+	    	<p:column headerText="ESTOQUE">
+	    		<h:outputText value="#{prod.estoque}" />
+	    	</p:column>
+	    	<p:column headerText="VALOR">
+	    		<h:outputText value="#{prod.valor}" />
+	    	</p:column>
+	    	<p:column headerText="DATA CADASTRO">
+	    		<h:outputText value="#{prod.dataCadastro}" />
+	    	</p:column>
+	    	<p:column headerText="CATEGORIA">
+	    		<h:outputText value="#{prod.categoria.nomeCategoria}" />
+	    	</p:column>
+	    	<p:column headerText="DETALHES">
+	    		<p:commandButton value="DETALHES" action="#{pBean.detalhes}" 
+	    		ajax="false">
+	    			<f:setPropertyActionListener target="#{pBean.produto}" 
+	    										value="#{prod}" />
+	    		</p:commandButton>
+	    	</p:column>
+	    </p:dataTable>
+	    
+	    </h:form>
+	</ui:define>
+</ui:composition>
+</html>

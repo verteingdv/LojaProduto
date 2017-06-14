@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+	<script>  
+            PrimeFaces.locales['pt'] = {  
+                closeText: 'Fechar',  
+                prevText: 'Anterior',  
+                nextText: 'Próximo',  
+                currentText: 'Começo',  
+                monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],  
+                monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],  
+                dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],  
+                dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'],  
+                dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],  
+                weekHeader: 'Semana',  
+                firstDay: 0,  
+                isRTL: false,  
+                showMonthAfterYear: false,  
+                yearSuffix: '',  
+                timeOnlyTitle: 'Só Horas',  
+                timeText: 'Tempo',  
+                hourText: 'Hora',  
+                minuteText: 'Minuto',  
+                secondText: 'Segundo',  
+                ampm: false,  
+                month: 'Mês',  
+                week: 'Semana',  
+                day: 'Dia',  
+                allDayText: 'Todo o Dia'  
+            };  
+        </script>
+        
+		<f:metadata>
+			<f:event listener="#{uBean.filtrar}" type="preRenderView"></f:event>
+		</f:metadata>
+		
+	</h:head>
+	
+	<h:body>
+	
+		<h:form id="formmenu">
+			<p:menubar>
+				<p:menuitem value="HOME" url="painel.jsf" />
+				<p:submenu label="PRODUTOS">
+					<p:menuitem value="NOVO" onclick="PF('cadproduto').show();" />
+					<p:separator />
+					<p:menuitem value="BUSCAR" 
+					url="/admin/buscar.jsf" />
+				</p:submenu>
+				<p:menuitem value="RELATÓRIO" action="#{pBean.relatorio}" ajax="false"  />
+				<p:menuitem value="SAIR" action="#{uBean.sair}"  ajax="false"  />
+			</p:menubar>
+		</h:form>
+
+		Seja bem vindo: <h:outputText value="#{uBean.usuario.nome}"></h:outputText>
+
+		<p:dialog header="CADASTRAR PRODUTO" modal="true" widgetVar="cadproduto">
+			<h:outputText value="Preencha o formulário de cadastro" />
+			<h:form id="formproduto">
+				<h:panelGrid columns="2" columnClasses="cellGridFormLabel,none,cellGridFormLabel,none">
+					<h:outputText value="Nome: " />
+					<p:inputText id="nome" value="#{pBean.produto.nome}"></p:inputText>
+					
+					<h:outputText value="Estoque: " />
+					<p:spinner id="estoque" value="#{pBean.produto.estoque}" />
+					
+					<h:outputText value="Valor: " />
+					<p:inputText id="valor" value="#{pBean.produto.valor}" />
+					
+					<h:outputText value="Data Cadastro: " />
+					<p:calendar id="datacadastro" locale="pt" pattern="dd/MM/yyyy" 
+					value="#{pBean.produto.dataCadastro}">
+					</p:calendar>
+					
+					<h:outputText value="Categoria: " />
+					<p:selectOneMenu id="categoria" value="#{pBean.categoria.idCategoria}">
+						<f:selectItems value="#{cBean.listaCategoria}" />
+					</p:selectOneMenu>
+				</h:panelGrid>
+				<p:commandButton value="CADASTRAR PRODUTO" action="#{pBean.cadastrar}"
+				 update="formproduto"></p:commandButton>
+				<p:growl></p:growl>
+			</h:form>
+		</p:dialog>
+		
+		<ui:insert name="conteudo"></ui:insert>
+		
+	</h:body>
+
+</html>

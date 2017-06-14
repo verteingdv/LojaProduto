@@ -1,0 +1,54 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition template="/template/layout.xhtml">
+	<ui:define name="conteudo">
+		<h:form id="form2">
+			<p:panel header="DETALHES DO PRODUTO">
+				<p:panelGrid columns="2">
+				<h:outputText value="Nome: " />
+				<p:inputText value="#{pBean.produto2.nome}" />
+				
+				<h:outputText value="Estoque: " />
+				<p:spinner value="#{pBean.produto2.estoque}" />
+				
+				<h:outputText value="Valor: " />
+				<p:inputText value="#{pBean.produto2.valor}" />
+				
+				<h:outputText value="Data Cadastro: " />
+				<p:calendar pattern="dd/MM/yyyy" value="#{pBean.produto2.dataCadastro}" />
+				
+				<h:outputText value="Categoria: " />
+				<p:selectOneMenu id="categoria" value="#{pBean.produto2.categoria.idCategoria}">
+					<f:selectItems value="#{cBean.listaCategoria}" />
+				</p:selectOneMenu>
+				</p:panelGrid>
+				
+				<p:commandButton value="EDITAR" action="#{pBean.editar}" 
+				 update="form2"
+				></p:commandButton>
+				 
+				<p:commandButton value="EXCLUIR" action="#{pBean.excluir}"
+				update="form2">
+					<p:confirm header="CONFIRMAR" message="Confirmar exclusão"
+					icon="ui-icon-alert" />
+				</p:commandButton>
+				
+				<p:confirmDialog global="true">
+					<p:commandButton value="SIM" styleClass="ui-confirmdialog-yes" />
+					<p:commandButton value="NÃO" styleClass="ui-confirmdialog-no" />
+				</p:confirmDialog>
+				
+				<h:inputHidden value="#{pBean.produto2.idProduto}"></h:inputHidden>
+				<p:growl></p:growl>
+			</p:panel>
+		</h:form>	    
+	</ui:define>
+</ui:composition>
+</html>
